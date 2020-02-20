@@ -7,6 +7,7 @@
   "dependencies": {
     "@babel/plugin-syntax-jsx": "^7.0.0",
     "@babel/types": "^7.0.0",
+    "@zongze/babel-plugin-react-css-modules": "^1.0.1-alpha.2",
     "ajv": "^6.5.3",
     "ajv-keywords": "^3.2.0",
     "generic-names": "^2.0.1",
@@ -74,7 +75,7 @@
     "lint": "eslint ./src && flow",
     "test": "jest"
   },
-  "version": "1.0.1-alpha.2",
+  "version": "1.0.1-alpha.3",
   "files": [
     "dist"
   ]

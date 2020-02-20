@@ -30,7 +30,11 @@ module.exports = {
                 // attributeNames: {
                 //   className: 'className',
                 //   styleName: null,
-                // }
+                // },
+                // handleMissingStyleName: 'warn',
+                // include: [
+                //   'src/components/table.css'
+                // ]
               }
             ]
           ]

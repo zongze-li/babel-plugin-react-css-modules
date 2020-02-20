@@ -62,7 +62,7 @@
   ],
   "license": "BSD-3-Clause",
   "main": "dist/index.js",
-  "name": "babel-plugin-react-css-modules__fork133",
+  "name": "@zongze-li/babel-plugin-react-css-modules",
   "repository": {
     "type": "git",
     "url": "https://github.com/gajus/babel-plugin-react-css-modules"
@@ -74,7 +74,7 @@
     "lint": "eslint ./src && flow",
     "test": "jest"
   },
-  "version": "1.0.1-alpha.2",
+  "version": "1.0.1-alpha.1",
   "files": [
     "dist"
   ]

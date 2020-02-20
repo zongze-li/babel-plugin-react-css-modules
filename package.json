@@ -62,7 +62,7 @@
   ],
   "license": "BSD-3-Clause",
   "main": "dist/index.js",
-  "name": "@zongze-li/babel-plugin-react-css-modules",
+  "name": "@zongze/babel-plugin-react-css-modules",
   "repository": {
     "type": "git",
     "url": "https://github.com/gajus/babel-plugin-react-css-modules"

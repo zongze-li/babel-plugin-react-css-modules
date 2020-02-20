@@ -23,9 +23,14 @@ module.exports = {
           plugins: [
             '@babel/transform-react-jsx',
             [
-              'react-css-modules',
+              require('../dist/index'),
+              // 'react-css-modules',
               {
-                context
+                context,
+                // attributeNames: {
+                //   className: 'className',
+                //   styleName: null,
+                // }
               }
             ]
           ]

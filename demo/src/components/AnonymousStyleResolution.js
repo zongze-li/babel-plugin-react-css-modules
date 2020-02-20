@@ -8,7 +8,7 @@ import './table.css';
 
 export default () => {
   return <div styleName='table'>
-    <div styleName='row'>
+    <div className='row1 row0'>
       <div styleName='cell'>A0</div>
       <div styleName='cell'>B0</div>
       <div styleName='cell'>C0</div>

@@ -2,8 +2,20 @@
   display: table;
 }
 
+.table1 {
+  font-size: 40px;
+}
+
 .row {
   display: table-row;
+}
+
+.row0 {
+  display: table-row;
+}
+
+.row1 {
+  font-size: 40px;
 }
 
 .cell {

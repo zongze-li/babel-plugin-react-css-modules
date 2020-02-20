@@ -74,5 +74,8 @@
     "lint": "eslint ./src && flow",
     "test": "jest"
   },
-  "version": "1.0.1-alpha.0"
+  "version": "1.0.1-alpha.0",
+  "files": [
+    "dist"
+  ]
 }

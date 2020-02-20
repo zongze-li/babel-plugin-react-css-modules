@@ -105,10 +105,16 @@ export default (styleNameValue: string, styleModuleImportMap: StyleModuleImportM
       if (isNamespacedStyleName(styleName)) {
         return getClassNameForNamespacedStyleName(styleName, styleModuleImportMap, handleMissingStyleName);
       }
-
+      // console.log('styleModuleImportMapKeys', styleModuleImportMapKeys)
       if (styleModuleImportMapKeys.length === 0) {
-        throw new Error('Cannot use styleName attribute for style name \'' + styleName +
-          '\' without importing at least one stylesheet.');
+        const { include, exclude  } = options
+        const errMsg = 'Cannot use styleName attribute for style name \'' + styleName +
+        '\' without importing at least one stylesheet.';
+        if (include || exclude) {
+          return console.warn(errMsg);
+        }
+
+        throw new Error(errMsg);
       }
 
       if (styleModuleImportMapKeys.length > 1) {

@@ -30,29 +30,38 @@ export default (
       return typeof attribute.name !== 'undefined' && attribute.name.name === destinationName;
     });
 
+  // console.log('destinationName', destinationName && destinationName.name, 'sourceAttribute', sourceAttribute.name.name)
+  let isNotSameName = true;
+  try {
+    if (destinationAttribute && sourceAttribute && destinationAttribute.name.name === sourceAttribute.name.name) {
+      isNotSameName = false;
+    }
+  } catch (err) {
+      isNotSameName = true;
+  }
+
   if (destinationAttribute) {
     if (isStringLiteral(destinationAttribute.value)) {
-      destinationAttribute.value.value += ' ' + resolvedStyleName;
+      if (isNotSameName) {
+        destinationAttribute.value.value += ' ' + resolvedStyleName;
+      } else {
+        destinationAttribute.value.value = resolvedStyleName;
+      }
     } else if (isJSXExpressionContainer(destinationAttribute.value)) {
-      destinationAttribute.value.expression = conditionalClassMerge(
-        destinationAttribute.value.expression,
-        stringLiteral(resolvedStyleName)
-      );
+      if (isNotSameName) {
+        destinationAttribute.value.expression = conditionalClassMerge(
+          destinationAttribute.value.expression,
+          stringLiteral(resolvedStyleName)
+        );
+      } else {
+        destinationAttribute.value.expression = stringLiteral(resolvedStyleName);
+      }
+
     } else {
       throw new Error('Unexpected attribute value:' + destinationAttribute.value);
     }
 
-    // console.log('destinationName', destinationName, 'sourceAttribute', sourceAttribute.name.name)
-    let shouldRemove = true;
-    try {
-      if (destinationAttribute && sourceAttribute && destinationAttribute.name.name === sourceAttribute.name.name) {
-        shouldRemove = false;
-      }
-    } catch (err) {
-        shouldRemove = true;
-    }
-
-    if (shouldRemove) {
+    if (isNotSameName) {
       path.node.openingElement.attributes.splice(path.node.openingElement.attributes.indexOf(sourceAttribute), 1);
     }
   } else {

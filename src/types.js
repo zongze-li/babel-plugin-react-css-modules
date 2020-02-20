@@ -16,5 +16,7 @@ export type HandleMissingStyleNameOptionType = 'throw' | 'warn' | 'ignore';
 
 export type GetClassNameOptionsType = {|
   handleMissingStyleName: HandleMissingStyleNameOptionType,
-  autoResolveMultipleImports: boolean
+  autoResolveMultipleImports: boolean,
+  include: Array<string>,
+  exclude: string
 |};

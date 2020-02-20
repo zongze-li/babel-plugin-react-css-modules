@@ -7,6 +7,9 @@
     "exclude": {
       "type": "string"
     },
+    "include": {
+      "type": "array"
+    },
     "filetypes": {
       "additionalProperties": false,
       "patternProperties": {

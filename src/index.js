@@ -145,6 +145,14 @@ export default ({
       return true;
     }
 
+    const include = [].concat(stats.opts.include).filter(v => v);
+    if (stats.opts.include) {
+      const filter = (item) => include.some(reg => new RegExp(reg).test(item));
+      const shouldInclude = filter(filename);
+      // console.log('fileName', filename, include, shouldInclude);
+      return !shouldInclude;
+    }
+
     return false;
   };
 
@@ -215,7 +223,9 @@ export default ({
 
         const {
           handleMissingStyleName = optionsDefaults.handleMissingStyleName,
-          autoResolveMultipleImports = optionsDefaults.autoResolveMultipleImports
+          autoResolveMultipleImports = optionsDefaults.autoResolveMultipleImports,
+          include,
+          exclude,
         } = stats.opts || {};
 
         const spreadMap = createSpreadMapper(path, stats);
@@ -225,7 +235,9 @@ export default ({
 
           const options = {
             autoResolveMultipleImports,
-            handleMissingStyleName
+            handleMissingStyleName,
+            include,
+            exclude,
           };
 
           if (t.isStringLiteral(attribute.value)) {

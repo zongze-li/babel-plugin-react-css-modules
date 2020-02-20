@@ -42,7 +42,19 @@ export default (
       throw new Error('Unexpected attribute value:' + destinationAttribute.value);
     }
 
-    path.node.openingElement.attributes.splice(path.node.openingElement.attributes.indexOf(sourceAttribute), 1);
+    // console.log('destinationName', destinationName, 'sourceAttribute', sourceAttribute.name.name)
+    let shouldRemove = true;
+    try {
+      if (destinationAttribute && sourceAttribute && destinationAttribute.name.name === sourceAttribute.name.name) {
+        shouldRemove = false;
+      }
+    } catch (err) {
+        shouldRemove = true;
+    }
+
+    if (shouldRemove) {
+      path.node.openingElement.attributes.splice(path.node.openingElement.attributes.indexOf(sourceAttribute), 1);
+    }
   } else {
     sourceAttribute.name.name = destinationName;
     sourceAttribute.value.value = resolvedStyleName;

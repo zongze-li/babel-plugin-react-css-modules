@@ -33,11 +33,27 @@ export default (
       return typeof attribute.name !== 'undefined' && attribute.name.name === destinationName;
     });
 
-  if (destinationAttribute) {
-    path.node.openingElement.attributes.splice(path.node.openingElement.attributes.indexOf(destinationAttribute), 1);
+  // console.log('destinationName', destinationAttribute ? destinationAttribute.name.name : null, 'sourceAttribute', sourceAttribute.name.name)
+  let shouldRemove = true;
+  try {
+    if (destinationAttribute && destinationAttribute.name.name === sourceAttribute.name.name) {
+      shouldRemove = false;
+    }
+  } catch(err) {
+    shouldRemove = true;
   }
 
-  path.node.openingElement.attributes.splice(path.node.openingElement.attributes.indexOf(sourceAttribute), 1);
+
+  if (destinationAttribute) {
+    if (shouldRemove) {
+      path.node.openingElement.attributes.splice(path.node.openingElement.attributes.indexOf(destinationAttribute), 1);
+    }
+  }
+
+  if (shouldRemove) {
+    path.node.openingElement.attributes.splice(path.node.openingElement.attributes.indexOf(sourceAttribute), 1);
+  }
+
 
   const args = [
     expressionContainerValue.expression,

@@ -1,0 +1,26 @@
+{
+  "plugins": [
+    [
+      "../../../../src",
+      {
+        "attributeNames": {
+          "className": "className",
+          "styleName": null
+        },
+        "filetypes": {
+          ".scss": {
+            "syntax": "postcss-scss"
+          }
+        },
+        "generateScopedName": "[name]__[local]",
+        "webpackHotModuleReloading": false,
+        "handleMissingStyleName": "warn",
+        "autoResolveMultipleImports": true,
+        "skip": false,
+        "include": [
+          "a-classNameMap"
+        ]
+      }
+    ]
+  ]
+}

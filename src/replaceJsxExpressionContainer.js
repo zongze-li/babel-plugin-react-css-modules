@@ -34,23 +34,23 @@ export default (
     });
 
   // console.log('destinationName', destinationAttribute ? destinationAttribute.name.name : null, 'sourceAttribute', sourceAttribute.name.name)
-  let shouldRemove = true;
+  let isNotSameName = true;
   try {
     if (destinationAttribute && destinationAttribute.name.name === sourceAttribute.name.name) {
-      shouldRemove = false;
+      isNotSameName = false;
     }
   } catch(err) {
-    shouldRemove = true;
+    isNotSameName = true;
   }
 
 
   if (destinationAttribute) {
-    if (shouldRemove) {
+    if (isNotSameName) {
       path.node.openingElement.attributes.splice(path.node.openingElement.attributes.indexOf(destinationAttribute), 1);
     }
   }
 
-  if (shouldRemove) {
+  if (isNotSameName) {
     path.node.openingElement.attributes.splice(path.node.openingElement.attributes.indexOf(sourceAttribute), 1);
   }
 
@@ -74,26 +74,36 @@ export default (
 
   if (destinationAttribute) {
     if (isStringLiteral(destinationAttribute.value)) {
+      const jSXExpression = isNotSameName
+        ? binaryExpression(
+          '+',
+          t.stringLiteral(destinationAttribute.value.value + ' '),
+          styleNameExpression
+        )
+        :  styleNameExpression;
+
       path.node.openingElement.attributes.push(jSXAttribute(
         jSXIdentifier(destinationName),
         jSXExpressionContainer(
-          binaryExpression(
-            '+',
-            t.stringLiteral(destinationAttribute.value.value + ' '),
-            styleNameExpression
-          )
+          jSXExpression
         )
       ));
+
     } else if (isJSXExpressionContainer(destinationAttribute.value)) {
+      const jSXExpression = isNotSameName
+        ? conditionalClassMerge(
+          destinationAttribute.value.expression,
+          styleNameExpression
+        )
+        : styleNameExpression;
+
       path.node.openingElement.attributes.push(jSXAttribute(
         jSXIdentifier(destinationName),
         jSXExpressionContainer(
-          conditionalClassMerge(
-            destinationAttribute.value.expression,
-            styleNameExpression
-          )
+          jSXExpression
         )
       ));
+
     } else {
       throw new Error('Unexpected attribute value: ' + destinationAttribute.value);
     }

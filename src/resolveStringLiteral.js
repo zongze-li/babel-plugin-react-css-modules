@@ -49,7 +49,7 @@ export default (
     // TODO: 做成配置项
     // FIXME: 但是如果是表达式的话，会不会有问题呢？因为表达式是被强行转了一下的 => 暂不支持全局表达式
 
-    if (resolvedStyleName) {
+    if (resolvedStyleName || options.removeUnknownClassName) {
       if (isStringLiteral(destinationAttribute.value)) {
         if (isNotSameName) {
           destinationAttribute.value.value += ' ' + resolvedStyleName;

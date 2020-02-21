@@ -229,6 +229,7 @@ export default ({
           autoResolveMultipleImports = optionsDefaults.autoResolveMultipleImports,
           include,
           exclude,
+          removeUnknownClassName,
         } = stats.opts || {};
 
         const spreadMap = createSpreadMapper(path, stats);
@@ -241,6 +242,7 @@ export default ({
             handleMissingStyleName,
             include,
             exclude,
+            removeUnknownClassName,
           };
 
           if (

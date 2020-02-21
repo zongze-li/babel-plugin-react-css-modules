@@ -18,5 +18,6 @@ export type GetClassNameOptionsType = {|
   handleMissingStyleName: HandleMissingStyleNameOptionType,
   autoResolveMultipleImports: boolean,
   include: Array<string>,
-  exclude: string
+  exclude: string,
+  removeUnknownClassName: boolean
 |};

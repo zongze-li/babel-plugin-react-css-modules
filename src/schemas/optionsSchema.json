@@ -51,6 +51,9 @@
     "removeImport": {
       "type": "boolean"
     },
+    "removeUnknownClassName": {
+      "type": "boolean"
+    },
     "webpackHotModuleReloading": {
       "type": "boolean"
     },

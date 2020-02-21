@@ -41,31 +41,37 @@ export default (
   }
 
   if (destinationAttribute) {
-    if (isStringLiteral(destinationAttribute.value)) {
-      if (isNotSameName) {
-        destinationAttribute.value.value += ' ' + resolvedStyleName;
-      } else {
-        destinationAttribute.value.value = resolvedStyleName;
-      }
-    } else if (isJSXExpressionContainer(destinationAttribute.value)) {
-      if (isNotSameName) {
-        destinationAttribute.value.expression = conditionalClassMerge(
-          destinationAttribute.value.expression,
-          stringLiteral(resolvedStyleName)
-        );
-      } else {
-        destinationAttribute.value.expression = stringLiteral(resolvedStyleName);
-      }
+    if (resolvedStyleName) {
+      if (isStringLiteral(destinationAttribute.value)) {
+        if (isNotSameName) {
+          destinationAttribute.value.value += ' ' + resolvedStyleName;
+        } else {
+          destinationAttribute.value.value = resolvedStyleName;
+        }
+      } else if (isJSXExpressionContainer(destinationAttribute.value)) {
+        if (isNotSameName) {
+          destinationAttribute.value.expression = conditionalClassMerge(
+            destinationAttribute.value.expression,
+            stringLiteral(resolvedStyleName)
+          );
+        } else {
+          destinationAttribute.value.expression = stringLiteral(resolvedStyleName);
+        }
 
-    } else {
-      throw new Error('Unexpected attribute value:' + destinationAttribute.value);
+      } else {
+        throw new Error('Unexpected attribute value:' + destinationAttribute.value);
+      }
     }
 
     if (isNotSameName) {
       path.node.openingElement.attributes.splice(path.node.openingElement.attributes.indexOf(sourceAttribute), 1);
     }
   } else {
-    sourceAttribute.name.name = destinationName;
-    sourceAttribute.value.value = resolvedStyleName;
+    if (destinationName) {
+      sourceAttribute.name.name = destinationName;
+    }
+    if (resolvedStyleName) {
+      sourceAttribute.value.value = resolvedStyleName;
+    }
   }
 };

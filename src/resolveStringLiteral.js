@@ -23,7 +23,11 @@ export default (
   destinationName: string,
   options: GetClassNameOptionsType
 ): void => {
-  const resolvedStyleName = getClassName(sourceAttribute.value.value, styleModuleImportMap, options);
+  let sourceValue = !isJSXExpressionContainer(sourceAttribute.value)
+    ? sourceAttribute.value.value
+    : sourceAttribute.value.expression.value;
+
+  const resolvedStyleName = getClassName(sourceValue, styleModuleImportMap, options);
 
   const destinationAttribute = path.node.openingElement.attributes
     .find((attribute) => {

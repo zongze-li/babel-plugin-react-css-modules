@@ -20,11 +20,16 @@ const _styleModuleImportMap = {
     "entry-container": "Homepage__entry-container",
     "entry-item": "Homepage__entry-item",
     "entry-main": "Homepage__entry-main",
+    "entry-main-title": "Homepage__entry-main-title",
+    "entry-main-title-text": "Homepage__entry-main-title-text",
     "entry-main-item": "Homepage__entry-main-item",
+    "entry-main-item-label": "Homepage__entry-main-item-label",
     "entry-aside": "Homepage__entry-aside",
     "entry-aside-list": "Homepage__entry-aside-list",
     "entry-aside-row": "Homepage__entry-aside-row",
     "entry-aside-item": "Homepage__entry-aside-item",
+    "entry-aside-item-box": "Homepage__entry-aside-item-box",
+    "entry-aside-item-label": "Homepage__entry-aside-item-label",
     "process-bg": "Homepage__process-bg",
     "process-color": "Homepage__process-color",
     "press-canvas": "Homepage__press-canvas"
@@ -35,8 +40,8 @@ const rest = {};
 <div className="Homepage__home-page">
         <div className="home-page-header1" />
         <div className="home-page-header1" />
-        <div {...rest} className={"home-page-header" + (" " + (rest ? rest.className || "" : ""))} />
-        <div className={"home-page-header" + (" " + (rest ? rest.className || "" : ""))} {...rest} />
+        <div {...rest} className={"Homepage__home-page-header" + (" " + (rest ? rest.className || "" : ""))} />
+        <div className={"Homepage__home-page-header" + (" " + (rest ? rest.className || "" : ""))} {...rest} />
 
         <div className={(0, _getClassName2.default)(test + "home-page-header", _styleModuleImportMap, {
     "autoResolveMultipleImports": true,
@@ -50,13 +55,13 @@ const rest = {};
             <div className="abc"></div>
               <div className="abc"></div>
 
-              <div className="entry-main-title">
-                    <div className="entry-main-title-text"></div>
+              <div className="Homepage__entry-main-title">
+                    <div className="Homepage__entry-main-title-text"></div>
                   </div>
 
                   <div className="Homepage__entry-main-item Homepage__entry-item">
                     <div size="large" />
-                    <div className="entry-main-item-label">
+                    <div className="Homepage__entry-main-item-label">
                     </div>
                   </div>
             </div>
@@ -64,17 +69,17 @@ const rest = {};
               <div className="Homepage__entry-aside-list">
                 <div className="Homepage__entry-aside-row">
                       <div className="Homepage__entry-aside-item">
-                        <div className="Homepage__entry-item">
+                        <div className="Homepage__entry-item Homepage__entry-aside-item-box">
                                 <div>
                                   <div maxValue={99}>
                                     <div className={"entry-aside-list-icon1"} size="small" color="#6B80A8" backgroundColor="#F4F7FB" useIconFont={true} />
                                   </div>
-                                  <div className="entry-aside-item-label">
+                                  <div className="Homepage__entry-aside-item-label">
                                   </div>
                                 </div>
                                 <div>
                                   <div className="entry-aside-list-icon" size="small" color="#6B80A8" backgroundColor="#F4F7FB" useIconFont={true} />
-                                  <div className="entry-aside-item-label">
+                                  <div className="Homepage__entry-aside-item-label">
                                   </div>
                                 </div>
                         </div>
@@ -95,7 +100,7 @@ const rest = {};
             </div>
 
 
-        <canvas id='pressCanvas' className={'press-canvas'} />
+        <canvas id='pressCanvas' className={"Homepage__press-canvas"} />
 
 
         <div />

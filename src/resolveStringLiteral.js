@@ -41,6 +41,10 @@ export default (
   }
 
   if (destinationAttribute) {
+    // N,B: 为了兼容小程序传给全局组件的全局类名，这里空值不舍弃属性
+    // TODO: 做成配置项
+    // FIXME: 但是如果是表达式的话，会不会有问题呢？因为表达式是被强行转了一下的 => 暂不支持全局表达式
+
     if (resolvedStyleName) {
       if (isStringLiteral(destinationAttribute.value)) {
         if (isNotSameName) {

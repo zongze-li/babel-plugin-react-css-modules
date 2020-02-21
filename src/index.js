@@ -130,6 +130,17 @@ export default ({
     return filename.match(new RegExp(exclude));
   };
 
+  const isInclude = (filename, stats) => {
+    const include = [].concat(stats.opts.include).filter(v => v);
+    if (stats.opts.include) {
+      const exists = (item) => include.some(reg => new RegExp(reg).test(item));
+      const included = exists(filename);
+      // console.log('fileName', filename, include, included);
+      return included;
+    }
+    return true;
+  }
+
   const notForPlugin = (path: *, stats: *) => {
     stats.opts.filetypes = stats.opts.filetypes || {};
 
@@ -143,14 +154,6 @@ export default ({
 
     if (stats.opts.exclude && isFilenameExcluded(filename, stats.opts.exclude)) {
       return true;
-    }
-
-    const include = [].concat(stats.opts.include).filter(v => v);
-    if (stats.opts.include) {
-      const filter = (item) => include.some(reg => new RegExp(reg).test(item));
-      const shouldInclude = filter(filename);
-      // console.log('fileName', filename, include, shouldInclude);
-      return !shouldInclude;
     }
 
     return false;
@@ -240,7 +243,13 @@ export default ({
             exclude,
           };
 
-          if (t.isStringLiteral(attribute.value)) {
+          if (
+            t.isStringLiteral(attribute.value)
+            || (
+              t.isJSXExpressionContainer(attribute.value)
+                && t.isStringLiteral(attribute.value.expression)
+            )
+          ) {
             resolveStringLiteral(
               path,
               filenameMap[filename].styleModuleImportMap,
@@ -288,6 +297,12 @@ export default ({
 
         if (stats.opts.skip && !attributeNameExists(path, stats)) {
           skip = true;
+        } else {
+          skip = false;
+        }
+
+        if (!skip) {
+          skip = !isInclude(filename, stats);
         }
       }
     }

@@ -44,15 +44,12 @@ export default (
   }
 
 
-  if (destinationAttribute) {
-    if (isNotSameName) {
-      path.node.openingElement.attributes.splice(path.node.openingElement.attributes.indexOf(destinationAttribute), 1);
-    }
+  if (destinationAttribute && isNotSameName) {
+    path.node.openingElement.attributes.splice(path.node.openingElement.attributes.indexOf(destinationAttribute), 1);
   }
 
-  if (isNotSameName) {
-    path.node.openingElement.attributes.splice(path.node.openingElement.attributes.indexOf(sourceAttribute), 1);
-  }
+  path.node.openingElement.attributes.splice(path.node.openingElement.attributes.indexOf(sourceAttribute), 1);
+
 
 
   const args = [

@@ -1,8 +1,8 @@
 {
   "author": {
-    "email": "gajus@gajus.com",
-    "name": "Gajus Kuizinas",
-    "url": "http://gajus.com"
+    "email": "leo.ze@qq.com",
+    "name": "zongze.li",
+    "url": "https://github.com/lizongze"
   },
   "dependencies": {
     "@babel/plugin-syntax-jsx": "^7.0.0",
@@ -65,7 +65,7 @@
   "name": "@zongze/babel-plugin-react-css-modules",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gajus/babel-plugin-react-css-modules"
+    "url": "https://github.com/zongze-li/babel-plugin-react-css-modules"
   },
   "scripts": {
     "build": "rm -fr ./dist && NODE_ENV=production babel ./src --out-dir ./dist --copy-files && npm run build-helper",

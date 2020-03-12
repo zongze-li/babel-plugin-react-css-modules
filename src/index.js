@@ -134,7 +134,9 @@ export default ({
     const include = [].concat(stats.opts.include).filter(v => v);
     if (stats.opts.include) {
       const exists = (item) => include.some(reg => new RegExp(reg).test(item));
-      const included = exists(filename);
+      // N.B: bugfix: to fit file path in windows
+      // const included = exists(filename);
+      const included = exists(filename) || exists(filename.replace(/[\\]+/g, '/'));
       // console.log('fileName', filename, include, included);
       return included;
     }

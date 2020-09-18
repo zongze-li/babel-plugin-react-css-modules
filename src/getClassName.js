@@ -23,10 +23,21 @@ const handleError = (message: string, handleMissingStyleName: HandleMissingStyle
   return null;
 };
 
+const handleErrorPreserve = (msg: string, handleMissingStyleName: HandleMissingStyleNameOptionType, styleName: string, removeUnknownClassName: Boolean) => {
+  let ret = handleError(msg, handleMissingStyleName);
+  if (!removeUnknownClassName) {
+    // eslint-disable-next-line no-console
+    console.log('preserve className', styleName);
+    ret = styleName;
+  }
+  return ret;
+}
+
 const getClassNameForNamespacedStyleName = (
   styleName: string,
   styleModuleImportMap: StyleModuleImportMapType,
-  handleMissingStyleNameOption?: HandleMissingStyleNameOptionType
+  handleMissingStyleNameOption?: HandleMissingStyleNameOptionType,
+  removeUnknownClassName?: Boolean
 ): ?string => {
   // Note:
   // Do not use the desctructing syntax with Babel.
@@ -38,15 +49,15 @@ const getClassNameForNamespacedStyleName = (
     optionsDefaults.handleMissingStyleName;
 
   if (!moduleName) {
-    return handleError('Invalid style name: ' + styleName, handleMissingStyleName);
+    return handleErrorPreserve('Invalid style name: ' + styleName, handleMissingStyleName, styleName, removeUnknownClassName);
   }
 
   if (!styleModuleImportMap[importName]) {
-    return handleError('CSS module import does not exist: ' + importName, handleMissingStyleName);
+    return handleErrorPreserve('CSS module import does not exist: ' + importName, handleMissingStyleName, styleName, removeUnknownClassName);
   }
 
   if (!styleModuleImportMap[importName][moduleName]) {
-    return handleError('CSS module does not exist: ' + moduleName, handleMissingStyleName);
+    return handleErrorPreserve('CSS module does not exist: ' + moduleName, handleMissingStyleName, styleName, removeUnknownClassName);
   }
 
   return styleModuleImportMap[importName][moduleName];
@@ -55,7 +66,8 @@ const getClassNameForNamespacedStyleName = (
 const getClassNameFromMultipleImports = (
   styleName: string,
   styleModuleImportMap: StyleModuleImportMapType,
-  handleMissingStyleNameOption?: HandleMissingStyleNameOptionType
+  handleMissingStyleNameOption?: HandleMissingStyleNameOptionType,
+  removeUnknownClassName?: Boolean
 ): ?string => {
   const handleMissingStyleName = handleMissingStyleNameOption ||
     optionsDefaults.handleMissingStyleName;
@@ -78,7 +90,7 @@ const getClassNameFromMultipleImports = (
   }
 
   if (importKeysWithMatches.length === 0) {
-    return handleError('Could not resolve the styleName \'' + styleName + '\'.', handleMissingStyleName);
+    return handleErrorPreserve('Could not resolve the styleName \'' + styleName + '\'.', handleMissingStyleName, styleName, removeUnknownClassName);
   }
 
   return styleModuleImportMap[importKeysWithMatches[0]][styleName];
@@ -89,7 +101,8 @@ export default (styleNameValue: string, styleModuleImportMap: StyleModuleImportM
 
   const {
     handleMissingStyleName = optionsDefaults.handleMissingStyleName,
-    autoResolveMultipleImports = optionsDefaults.autoResolveMultipleImports
+    autoResolveMultipleImports = optionsDefaults.autoResolveMultipleImports,
+    removeUnknownClassName,
   } = options || {};
 
   if (!styleNameValue) {
@@ -103,7 +116,7 @@ export default (styleNameValue: string, styleModuleImportMap: StyleModuleImportM
     })
     .map((styleName) => {
       if (isNamespacedStyleName(styleName)) {
-        return getClassNameForNamespacedStyleName(styleName, styleModuleImportMap, handleMissingStyleName);
+        return getClassNameForNamespacedStyleName(styleName, styleModuleImportMap, handleMissingStyleName, removeUnknownClassName);
       }
       // console.log('styleModuleImportMapKeys', styleModuleImportMapKeys)
       if (styleModuleImportMapKeys.length === 0) {
@@ -123,13 +136,13 @@ export default (styleNameValue: string, styleModuleImportMap: StyleModuleImportM
             '\' with more than one stylesheet import without setting \'autoResolveMultipleImports\' to true.');
         }
 
-        return getClassNameFromMultipleImports(styleName, styleModuleImportMap, handleMissingStyleName);
+        return getClassNameFromMultipleImports(styleName, styleModuleImportMap, handleMissingStyleName, removeUnknownClassName);
       }
 
       const styleModuleMap: StyleModuleMapType = styleModuleImportMap[styleModuleImportMapKeys[0]];
 
       if (!styleModuleMap[styleName]) {
-        return handleError('Could not resolve the styleName \'' + styleName + '\'.', handleMissingStyleName);
+        return handleErrorPreserve('Could not resolve the styleName \'' + styleName + '\'.', handleMissingStyleName, styleName, removeUnknownClassName);
       }
 
       return styleModuleMap[styleName];

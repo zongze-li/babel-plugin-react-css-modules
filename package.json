@@ -75,7 +75,7 @@
     "publish": "npm publish --access public",
     "test": "jest test/*"
   },
-  "version": "1.0.1-beta.4",
+  "version": "1.0.1-beta.5",
   "files": [
     "dist"
   ]
